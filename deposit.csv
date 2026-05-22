@@ -1,0 +1,2 @@
+deposit_account_number,amount,interest_rate,start_date,end_date,term_type,currency
+1002,350000,8.0,2025-03-01,2026-03-01,30_days,RUB

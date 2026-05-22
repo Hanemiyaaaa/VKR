@@ -1,0 +1,9 @@
+account_number,name,account_type,currency
+1001,Расчётный счёт ООО Ромашка,settlement,RUB
+1002,Расчётный счёт ИП Иванов,settlement,RUB
+2001,Кредитный счёт ООО Ромашка,loan,RUB
+3001,Депозитный счёт ООО Ромашка,deposit,RUB
+4001,Касса банка,cash,RUB
+5001,Корсчёт в ЦБ,other,RUB
+9991,Процентные доходы по кредитам,other,RUB
+9992,Процентные расходы по депозитам,other,RUB

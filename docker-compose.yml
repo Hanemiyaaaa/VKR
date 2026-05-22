@@ -1,0 +1,63 @@
+services:
+  db:
+    image: postgres:15
+    container_name: mvp_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: loko1908
+      POSTGRES_DB: mvp_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: mvp_app
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://postgres:loko1908@db:5432/mvp_db
+    volumes:
+      - ./app:/app/app
+      - ./frontend:/frontend
+      - shared_data:/app/uploads
+    restart: unless-stopped
+
+  etl:
+    build:
+      context: ./etl
+      dockerfile: Dockerfile
+    container_name: mvp_etl
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://postgres:loko1908@db:5432/airflow_db
+      AIRFLOW__WEBSERVER__DEFAULT_UI_TIMEZONE: Europe/Moscow
+      AIRFLOW__CORE__FERNET_KEY: "WIhIb9CoFy1iGD_W0EK-eN-kmrFAtt6CxWZ6vr0RuiY="
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/dags
+      AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: 30
+      AIRFLOW_CONN_POSTGRES_DEFAULT: postgresql://postgres:loko1908@db:5432/mvp_db
+    volumes:
+      - ./etl/dags:/opt/airflow/dags
+      - ./etl/scripts:/opt/airflow/scripts
+      - shared_data:/app/uploads
+    ports:
+      - "8081:8080" # используем порт 8081 на хосте
+    command: >
+      bash -c " rm -f /opt/airflow/airflow-webserver.pid && airflow db migrate && airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com || true && airflow webserver -p 8080 & airflow scheduler "
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  shared_data:

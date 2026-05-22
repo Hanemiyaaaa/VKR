@@ -1,0 +1,2 @@
+loan_account_number,amount,interest_rate,start_date,end_date,repayment_day,remaining_balance,status,currency,risk_category
+2001,400000,12.5,2025-02-15,2026-02-15,15,370000,active,RUB,unsecured

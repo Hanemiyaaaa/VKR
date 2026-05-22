@@ -1,0 +1,7 @@
+component_type,value,as_of_date,currency
+tier1_share_capital,5000000,2025-03-15,RUB
+tier1_retained_earnings,1200000,2025-03-15,RUB
+tier1_share_premium,300000,2025-03-15,RUB
+tier2_subordinated_debt,1000000,2025-03-15,RUB
+deduction_uncovered_losses,200000,2025-03-15,RUB
+deduction_treasury_shares,0,2025-03-15,RUB

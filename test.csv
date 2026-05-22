@@ -1,0 +1,9 @@
+account_id,client_type,product_type,balance,currency,risk_flag
+1001,retail,loan,100000,RUB,LOW
+1002,corporate,deposit,500000,RUB,MEDIUM
+1003,retail,card,25000,RUB,HIGH
+1004,small_business,loan,150000,RUB,MEDIUM
+1005,retail,deposit,75000,RUB,LOW
+2001,corporate,current,2000000,RUB,HIGH
+2002,retail,loan,30000,RUB,MEDIUM
+2003,retail,card,8000,RUB,LOW
